@@ -1,0 +1,39 @@
+{
+    "name": "tm-engage/symfony-confluent-compat",
+    "description": "Symfony Compatibility for confluent stack",
+    "version": "1.0.0",
+    "type": "library",
+    "require": {
+        "php": "^7.4",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "beberlei/assert": "^2.9.9|~3.0",
+        "guzzlehttp/promises": "^1.4.0",
+        "widmogrod/php-functional": "^6.0",
+        "guzzlehttp/guzzle": "~6.3",
+        "guzzlehttp/psr7": "^1.6"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.5"
+    },
+    "license": "proprietary",
+    "autoload": {
+        "psr-4": {
+            "Apache\\Avro\\": "lib/Avro/",
+            "FlixTech\\AvroSerializer\\Objects\\": "lib/AvroSerde/src/Objects",
+            "FlixTech\\AvroSerializer\\Integrations\\": "lib/AvroSerDe/integrations/",
+            "FlixTech\\SchemaRegistryApi\\": "lib/SchemaRegistryClient"
+        },
+        "files": [
+            "lib/AvroSerDe/Protocol.php",
+            "lib/AvroSerDe/Serialize.php",
+            "lib/AvroSerDe/Common.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Yurii Borysov",
+            "email": "yurii.borysov@ticketmaster.com"
+        }
+    ]
+}
