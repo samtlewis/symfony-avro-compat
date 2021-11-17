@@ -1,0 +1,48 @@
+{
+    "name": "tm-engage/symfony-confluent-compat",
+    "description": "Symfony Compatibility for confluent stack",
+    "version": "1.0.6",
+    "type": "library",
+    "require": {
+        "php": "^7.4",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "beberlei/assert": "^2.9.9|~3.0",
+        "guzzlehttp/promises": "^1.4.0",
+        "widmogrod/php-functional": "^6.0",
+        "guzzlehttp/guzzle": "~6.3",
+        "guzzlehttp/psr7": "^1.6",
+        "doctrine/annotations": "^1.13",
+        "doctrine/cache": "^2.1",
+        "psr/simple-cache": "^1.0",
+        "symfony/cache": "^5.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0"
+    },
+    "license": "proprietary",
+    "autoload": {
+        "psr-4": {
+            "Apache\\Avro\\": "lib/Avro/",
+            "FlixTech\\AvroSerializer\\": "lib/AvroSerDe",
+            "FlixTech\\SchemaRegistryApi\\": "lib/SchemaRegistryClient",
+            "FlixTech\\SchemaRegistryApi\\Registry\\": "lib/SchemaRegistryClient/Registry"
+        },
+        "files": [
+            "lib/AvroSerDe/Protocol.php",
+            "lib/AvroSerDe/Serialize.php",
+            "lib/AvroSerDe/Common.php",
+            "lib/SchemaRegistryClient/Requests/Functions.php",
+            "lib/SchemaRegistryClient/Constants/Constants.php"
+        ],
+        "classmap": [
+            "tests"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Yurii Borysov",
+            "email": "yurii.borysov@ticketmaster.com"
+        }
+    ]
+}
