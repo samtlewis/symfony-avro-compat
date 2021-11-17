@@ -21,7 +21,7 @@
 namespace Apache\Avro\Schema;
 
 /**
- * Union of Avro schemas, of which values can be of any of the schema in
+ * Union of Avro schemas, of which values can be any of the schema in
  * the union.
  * @package Avro
  */

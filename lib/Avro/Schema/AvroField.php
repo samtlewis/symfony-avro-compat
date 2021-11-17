@@ -81,7 +81,7 @@ class AvroField extends AvroSchema
      */
     private $order;
     /**
-     * @var boolean whether or not the AvroNamedSchema of this field is
+     * @var boolean whether AvroNamedSchema of this field is
      *              defined in the AvroNamedSchemata instance
      */
     private $isTypeFromSchemata;

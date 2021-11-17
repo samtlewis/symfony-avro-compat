@@ -11,23 +11,26 @@
         "guzzlehttp/promises": "^1.4.0",
         "widmogrod/php-functional": "^6.0",
         "guzzlehttp/guzzle": "~6.3",
-        "guzzlehttp/psr7": "^1.6"
+        "guzzlehttp/psr7": "^1.6",
+        "doctrine/annotations": "^1.13"
     },
     "require-dev": {
-        "phpunit/phpunit": "^7.5"
+        "phpunit/phpunit": "^9.0"
     },
     "license": "proprietary",
     "autoload": {
         "psr-4": {
             "Apache\\Avro\\": "lib/Avro/",
-            "FlixTech\\AvroSerializer\\Objects\\": "lib/AvroSerde/src/Objects",
-            "FlixTech\\AvroSerializer\\Integrations\\": "lib/AvroSerDe/integrations/",
+            "FlixTech\\AvroSerializer\\Objects\\": "lib/AvroSerDe/Objects",
             "FlixTech\\SchemaRegistryApi\\": "lib/SchemaRegistryClient"
         },
         "files": [
             "lib/AvroSerDe/Protocol.php",
             "lib/AvroSerDe/Serialize.php",
             "lib/AvroSerDe/Common.php"
+        ],
+        "classmap": [
+            "tests"
         ]
     },
     "authors": [

@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace FlixTech\AvroSerializer\Objects\SchemaResolvers;
 
+use Apache\Avro\Schema\AvroSchemaParseException;
 use Assert\Assert;
-use AvroSchema;
+use Apache\Avro\Schema\AvroSchema;
 use FlixTech\AvroSerializer\Objects\SchemaResolverInterface;
 
 class FileResolver implements SchemaResolverInterface
@@ -29,7 +30,7 @@ class FileResolver implements SchemaResolverInterface
     /**
      * {@inheritdoc}
      *
-     * @throws \AvroSchemaParseException
+     * @throws AvroSchemaParseException
      */
     public function valueSchemaFor($record): AvroSchema
     {
@@ -46,7 +47,7 @@ class FileResolver implements SchemaResolverInterface
     /**
      * {@inheritdoc}
      *
-     * @throws \AvroSchemaParseException
+     * @throws AvroSchemaParseException
      */
     public function keySchemaFor($record): ?AvroSchema
     {

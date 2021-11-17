@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace FlixTech\AvroSerializer\Objects\SchemaResolvers;
 
-use AvroSchema;
+use Apache\Avro\Schema\AvroSchema;
 use FlixTech\AvroSerializer\Objects\SchemaResolverInterface;
 
 class ChainResolver implements SchemaResolverInterface

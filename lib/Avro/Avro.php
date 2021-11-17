@@ -50,7 +50,7 @@ class Avro
      * Mode used to handle bigintegers. After Avro::check64Bit() has been called,
      * (usually via a call to Avro::checkPlatform(), set to
      * self::GMP_BIGINTEGER_MODE on 32-bit platforms that have GMP available,
-     * and to self::PHP_BIGINTEGER_MODE otherwise.
+     * and to self::PHP_BIGINTEGER_MODE otherwise).
      */
     private static $biginteger_mode;
 
