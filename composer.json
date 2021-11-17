@@ -1,7 +1,7 @@
 {
     "name": "tm-engage/symfony-confluent-compat",
     "description": "Symfony Compatibility for confluent stack",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "type": "library",
     "require": {
         "php": "^7.4",
