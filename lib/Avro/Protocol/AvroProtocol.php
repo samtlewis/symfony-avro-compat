@@ -24,7 +24,7 @@ use Apache\Avro\Schema\AvroNamedSchemata;
 use Apache\Avro\Schema\AvroSchema;
 
 /**
- * Avro library for protocols
+ * Avro protocols handling
  * @package Avro
  */
 class AvroProtocol

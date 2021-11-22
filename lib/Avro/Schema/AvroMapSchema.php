@@ -35,7 +35,7 @@ class AvroMapSchema extends AvroSchema
 
     /**
      * @var boolean true if the named schema
-     * XXX Couldn't we derive this based on whether or not
+     * XXX Couldn't we derive this based on whether
      * $this->values is a string?
      */
     private $isValuesSchemaFromSchemata;
@@ -70,7 +70,7 @@ class AvroMapSchema extends AvroSchema
     }
 
     /**
-     * @returns XXX|AvroSchema
+     * @return AvroSchema|string|null
      */
     public function values()
     {

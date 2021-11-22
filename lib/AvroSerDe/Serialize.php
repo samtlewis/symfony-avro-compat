@@ -2,12 +2,13 @@
 
 namespace FlixTech\AvroSerializer\Serialize;
 
-use AvroIOBinaryDecoder;
-use AvroIOBinaryEncoder;
-use AvroIODatumReader;
-use AvroIODatumWriter;
-use AvroSchema;
-use AvroStringIO;
+use Apache\Avro\AvroException;
+use Apache\Avro\Datum\AvroIOBinaryDecoder;
+use Apache\Avro\Datum\AvroIOBinaryEncoder;
+use Apache\Avro\Datum\AvroIODatumReader;
+use Apache\Avro\Datum\AvroIODatumWriter;
+use Apache\Avro\Schema\AvroSchema;
+use Apache\Avro\IO\AvroStringIO;
 use FlixTech\AvroSerializer\Objects\Exceptions\Exceptions;
 use Widmogrod\Monad\Either\Either;
 use Widmogrod\Monad\Either\Left;
@@ -18,7 +19,7 @@ use function Widmogrod\Functional\tryCatch;
 const avroStringIo = '\FlixTech\AvroSerializer\Serialize\avroStringIo';
 
 /**
- * @throws \AvroIOException
+ * @throws \Apache\Avro\IO\AvroIOException
  */
 function avroStringIo(string $contents): AvroStringIO
 {
@@ -42,7 +43,8 @@ function avroBinaryDecoder(AvroStringIO $io): AvroIOBinaryDecoder
 const avroDatumWriter = '\FlixTech\AvroSerializer\Serialize\avroDatumWriter';
 
 /**
- * @throws \AvroIOException
+ * @return callable
+ * @throws \Apache\Avro\IO\AvroIOException
  */
 function avroDatumWriter(): callable
 {
@@ -62,11 +64,11 @@ function writeDatum(AvroIODatumWriter $writer, AvroStringIO $io, AvroSchema $sch
     return tryCatch(
         static function ($record) use ($schema, $writer, $io) {
             $io->truncate();
-            $writer->write_data($schema, $record, avroBinaryEncoder($io));
+            $writer->writeData($schema, $record, avroBinaryEncoder($io));
 
             return Right::of($io->string());
         },
-        static function (\AvroException $e) use ($record, $schema) {
+        static function (AvroException $e) use ($record, $schema) {
             return Left::of(
                 Exceptions::forEncode($record, $schema, $e)
             );
@@ -78,7 +80,7 @@ function writeDatum(AvroIODatumWriter $writer, AvroStringIO $io, AvroSchema $sch
 const avroDatumReader = '\FlixTech\AvroSerializer\Serialize\avroDatumReader';
 
 /**
- * @throws \AvroIOException
+ * @throws \Apache\Avro\IO\AvroIOException
  */
 function avroDatumReader(): callable
 {
@@ -106,9 +108,9 @@ function readDatum(
             $io->write($data);
             $io->seek(0);
 
-            return Right::of($reader->read_data($writersSchema, $readersSchema, avroBinaryDecoder($io)));
+            return Right::of($reader->readData($writersSchema, $readersSchema, avroBinaryDecoder($io)));
         },
-        static function (\AvroException $e) use ($data) {
+        static function (AvroException $e) use ($data) {
             return Left::of(
                 Exceptions::forDecode($data, $e)
             );

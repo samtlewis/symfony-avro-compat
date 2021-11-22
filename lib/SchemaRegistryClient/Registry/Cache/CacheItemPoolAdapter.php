@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace FlixTech\SchemaRegistryApi\Registry\Cache;
 
-use AvroSchema;
-use AvroSchemaParseException;
+use Apache\Avro\Schema\AvroSchema;
+use Apache\Avro\Schema\AvroSchemaParseException;
 use FlixTech\SchemaRegistryApi\Registry\CacheAdapter;
 use Psr\Cache\CacheItemPoolInterface;
-use Symfony\Component\Cache\Exception\InvalidArgumentException;
+use InvalidArgumentException;
 
 class CacheItemPoolAdapter implements CacheAdapter
 {

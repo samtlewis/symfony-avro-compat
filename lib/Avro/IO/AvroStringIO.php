@@ -37,7 +37,7 @@ class AvroStringIO extends AvroIO
      */
     private $current_index;
     /**
-     * @var boolean whether or not the string is closed.
+     * @var boolean whether the string is closed.
      */
     private $is_closed;
 
@@ -119,7 +119,7 @@ class AvroStringIO extends AvroIO
 
     /**
      * @returns string bytes read from buffer
-     * @todo test for fencepost errors wrt updating current_index
+     * @todo tests for fencepost errors wrt updating current_index
      */
     public function read($len)
     {
@@ -210,7 +210,7 @@ class AvroStringIO extends AvroIO
     }
 
     /**
-     * Marks this buffer as closed.
+     * Marks this buffer closed.
      * @returns boolean true
      */
     public function close()

@@ -33,7 +33,7 @@ class AvroUtil
      * or a list (an array with monotonically increasing integer indicies
      * starting with zero).
      *
-     * @param array $ary array to test
+     * @param array $ary array to tests
      * @returns true if the array is a list and false otherwise.
      *
      */

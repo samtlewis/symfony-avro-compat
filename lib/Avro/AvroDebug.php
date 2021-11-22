@@ -57,7 +57,7 @@ class AvroDebug
     /**
      * @var int $debug_level
      * @returns boolean true if the given $debug_level is equivalent
-     *                  or more verbose than than the current debug level
+     *                  or more verbose than the current debug level
      *                  and false otherwise.
      */
     public static function isDebug($debug_level = self::DEBUG1)

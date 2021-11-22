@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace FlixTech\AvroSerializer\Objects;
 
-use AvroSchema;
+use Apache\Avro\Schema\AvroSchema;
 
 /**
  * Resolves value and/or key schemas for a given record.

@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace FlixTech\AvroSerializer\Objects;
 
-use AvroSchema;
+use Apache\Avro\IO\AvroIOException;
+use Apache\Avro\Schema\AvroSchema;
 use FlixTech\SchemaRegistryApi\Exception\SchemaNotFoundException;
 use FlixTech\SchemaRegistryApi\Exception\SchemaRegistryException;
 use FlixTech\SchemaRegistryApi\Exception\SubjectNotFoundException;
@@ -80,7 +81,7 @@ class RecordSerializer
      *
      * @param array<string,mixed> $options
      *
-     * @throws \AvroIOException
+     * @throws AvroIOException
      */
     public function __construct(Registry $registry, array $options = [])
     {
@@ -97,13 +98,9 @@ class RecordSerializer
         $this->schemaIdGetter = $get(PROTOCOL_ACCESSOR_SCHEMA_ID);
         $this->avroBinaryGetter = $get(PROTOCOL_ACCESSOR_AVRO);
 
-        $this->registerMissingSchemas = isset($options[self::OPTION_REGISTER_MISSING_SCHEMAS])
-            ? (bool) $options[self::OPTION_REGISTER_MISSING_SCHEMAS]
-            : false;
+        $this->registerMissingSchemas = isset($options[self::OPTION_REGISTER_MISSING_SCHEMAS]) && (bool)$options[self::OPTION_REGISTER_MISSING_SCHEMAS];
 
-        $this->registerNonExistingSubjects = isset($options[self::OPTION_REGISTER_MISSING_SUBJECTS])
-            ? (bool) $options[self::OPTION_REGISTER_MISSING_SUBJECTS]
-            : false;
+        $this->registerNonExistingSubjects = isset($options[self::OPTION_REGISTER_MISSING_SUBJECTS]) && (bool)$options[self::OPTION_REGISTER_MISSING_SUBJECTS];
     }
 
     /**
@@ -142,7 +139,9 @@ class RecordSerializer
 
         /** @var \Widmogrod\Monad\Either\Either $read */
         $read = $validated
-            ->orElse(static function () { throw new \InvalidArgumentException('Could not validate message wire protocol.'); })
+            ->orElse(static function () {
+                throw new \InvalidArgumentException('Could not validate message wire protocol.');
+            })
             ->bind($this->avroBinaryGetter)
             ->bind($cachedReader($readersSchema));
 
@@ -207,7 +206,7 @@ class RecordSerializer
             default:
                 // @codeCoverageIgnoreStart
                 throw $e;
-                // @codeCoverageIgnoreEnd
+            // @codeCoverageIgnoreEnd
         }
     }
 }
