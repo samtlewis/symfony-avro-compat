@@ -1,8 +1,9 @@
 {
-    "name": "tm-engage/symfony-confluent-compat",
+    "name": "ybo/symfony-avro-cs-compatibility",
     "description": "Symfony Compatibility for confluent stack",
     "version": "1.0.8",
     "type": "library",
+    "license": ["Apache-2.0","MIT"],
     "require": {
         "php": "^7.4",
         "ext-curl": "*",
@@ -20,7 +21,6 @@
         "phpunit/phpunit": "^9.0",
         "symfony/cache": "^4.4"
     },
-    "license": "proprietary",
     "autoload": {
         "psr-4": {
             "Apache\\Avro\\": "lib/Avro/",
