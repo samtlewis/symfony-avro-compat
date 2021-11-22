@@ -53,6 +53,13 @@ use Apache\Avro\AvroUtil;
  */
 class AvroSchema
 {
+
+    private $originalSchema;
+
+    public function setOriginalSchema(string $schemaJson) {
+        $this->originalSchema = $schemaJson;
+    }
+
     /**
      * @var int lower bound of integer values: -(1 << 31)
      */
@@ -577,5 +584,13 @@ class AvroSchema
     public function attribute($attribute)
     {
         return $this->$attribute();
+    }
+
+    /**
+     * @return string
+     */
+    public function getOriginalSchema()
+    {
+        return $this->originalSchema;
     }
 }
