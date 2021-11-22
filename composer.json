@@ -3,7 +3,7 @@
     "description": "Symfony Compatibility for confluent stack",
     "version": "1.0.7",
     "type": "library",
-    "license": "apache, MIT",
+    "license": ["apache","MIT"],
     "require": {
         "php": "^7.4",
         "ext-curl": "*",
