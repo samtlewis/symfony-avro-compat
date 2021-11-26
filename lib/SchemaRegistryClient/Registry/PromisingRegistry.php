@@ -57,7 +57,7 @@ class PromisingRegistry implements AsynchronousRegistry
      */
     public function register(string $subject, AvroSchema $schema, AvroReference ...$references): PromiseInterface
     {
-        $request = registerNewSchemaVersionWithSubjectRequest((string) $schema, $subject, ...$references);
+        $request = registerNewSchemaVersionWithSubjectRequest((string)$schema, $subject, ...$references);
 
         $onFulfilled = function (ResponseInterface $response) {
             return $this->getJsonFromResponseBody($response)['id'];
@@ -73,7 +73,7 @@ class PromisingRegistry implements AsynchronousRegistry
      */
     public function schemaId(string $subject, AvroSchema $schema): PromiseInterface
     {
-        $request = checkIfSubjectHasSchemaRegisteredRequest($subject, (string) $schema);
+        $request = checkIfSubjectHasSchemaRegisteredRequest($subject, $schema->getOriginalSchema() ?? (string) $schema);
 
         $onFulfilled = function (ResponseInterface $response) {
             return $this->getJsonFromResponseBody($response)['id'];
@@ -125,7 +125,7 @@ class PromisingRegistry implements AsynchronousRegistry
      */
     public function schemaVersion(string $subject, AvroSchema $schema): PromiseInterface
     {
-        $request = checkIfSubjectHasSchemaRegisteredRequest($subject, (string) $schema);
+        $request = checkIfSubjectHasSchemaRegisteredRequest($subject, (string)$schema);
 
         $onFulfilled = function (ResponseInterface $response) {
             return $this->getJsonFromResponseBody($response)['version'];
@@ -154,7 +154,7 @@ class PromisingRegistry implements AsynchronousRegistry
 
     /**
      * @param RequestInterface $request
-     * @param callable         $onFulfilled
+     * @param callable $onFulfilled
      *
      * @return PromiseInterface
      */
@@ -171,7 +171,7 @@ class PromisingRegistry implements AsynchronousRegistry
      */
     private function getJsonFromResponseBody(ResponseInterface $response): array
     {
-        $body = (string) $response->getBody();
+        $body = (string)$response->getBody();
 
         try {
             $decoded = \GuzzleHttp\json_decode($body, true);
