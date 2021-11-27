@@ -44,10 +44,10 @@ class AvroIODatumReader
     private $readers_schema;
 
     /**
-     * @param AvroSchema $writers_schema
-     * @param AvroSchema $readers_schema
+     * @param AvroSchema|null $writers_schema
+     * @param AvroSchema|null $readers_schema
      */
-    public function __construct($writers_schema = null, $readers_schema = null)
+    public function __construct(?AvroSchema $writers_schema = null, ?AvroSchema $readers_schema = null)
     {
         $this->writers_schema = $writers_schema;
         $this->readers_schema = $readers_schema;
@@ -56,7 +56,7 @@ class AvroIODatumReader
     /**
      * @param AvroSchema $readers_schema
      */
-    public function setWritersSchema($readers_schema)
+    public function setWritersSchema(?AvroSchema $readers_schema)
     {
         $this->writers_schema = $readers_schema;
     }
@@ -256,7 +256,12 @@ class AvroIODatumReader
     }
 
     /**
+     * @param $writers_schema
+     * @param $readers_schema
+     * @param $decoder
      * @return array
+     * @throws AvroException
+     * @throws AvroIOSchemaMatchException
      */
     public function readArray($writers_schema, $readers_schema, $decoder)
     {
@@ -338,9 +343,14 @@ class AvroIODatumReader
     }
 
     /**
-     * @returns array
+     * @param $writers_schema
+     * @param $readers_schema
+     * @param $decoder
+     * @return array
+     * @throws AvroException
+     * @throws AvroIOSchemaMatchException
      */
-    public function readRecord($writers_schema, $readers_schema, $decoder)
+    public function readRecord($writers_schema, $readers_schema, $decoder) : array
     {
         $readers_fields = $readers_schema->fieldsHash();
         $record = [];
@@ -362,10 +372,8 @@ class AvroIODatumReader
             if (isset($writers_fields[$field_name])) {
                 continue;
             }
-            if ($field->hasDefaultValue()) {
+            if ($field->hasDefaultValue() && !isset($record[$field->name()])) {
                 $record[$field->name()] = $this->readDefaultValue($field->type(), $field->defaultValue());
-            } else {
-                null;
             }
         }
 
@@ -375,8 +383,12 @@ class AvroIODatumReader
     /**
      * @param AvroSchema $writers_schema
      * @param AvroIOBinaryDecoder $decoder
+     * @return void|null
+     * @throws AvroException
+     * @noinspection PhpVoidFunctionResultUsedInspection
      */
-    public static function skipData($writers_schema, $decoder)
+
+    public static function skipData(AvroSchema $writers_schema, AvroIOBinaryDecoder $decoder)
     {
         switch ($writers_schema->type()) {
             case AvroSchema::NULL_TYPE:
@@ -424,11 +436,15 @@ class AvroIODatumReader
      *
      * @throws AvroException if $field_schema type is unknown.
      */
-    public function readDefaultValue($field_schema, $default_value)
+    public function readDefaultValue(AvroSchema $field_schema, $default_value)
     {
         switch ($field_schema->type()) {
             case AvroSchema::NULL_TYPE:
                 return null;
+            case AvroSchema::BYTES_TYPE:
+            case AvroSchema::STRING_TYPE:
+            case AvroSchema::FIXED_SCHEMA:
+            case AvroSchema::ENUM_SCHEMA:
             case AvroSchema::BOOLEAN_TYPE:
                 return $default_value;
             case AvroSchema::INT_TYPE:
@@ -437,9 +453,6 @@ class AvroIODatumReader
             case AvroSchema::FLOAT_TYPE:
             case AvroSchema::DOUBLE_TYPE:
                 return (float) $default_value;
-            case AvroSchema::STRING_TYPE:
-            case AvroSchema::BYTES_TYPE:
-                return $default_value;
             case AvroSchema::ARRAY_SCHEMA:
                 $array = array();
                 foreach ($default_value as $json_val) {
@@ -461,9 +474,6 @@ class AvroIODatumReader
                     $field_schema->schemaByIndex(0),
                     $default_value
                 );
-            case AvroSchema::ENUM_SCHEMA:
-            case AvroSchema::FIXED_SCHEMA:
-                return $default_value;
             case AvroSchema::RECORD_SCHEMA:
                 $record = array();
                 foreach ($field_schema->fields() as $field) {

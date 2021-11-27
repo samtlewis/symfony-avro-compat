@@ -22,6 +22,7 @@ namespace Apache\Avro\Datum;
 
 use Apache\Avro\AvroException;
 use Apache\Avro\Schema\AvroSchema;
+use Apache\Avro\Schema\AvroSchemaParseException;
 
 /**
  * Handles schema-specific writing of data to the encoder.
@@ -34,14 +35,14 @@ class AvroIODatumWriter
 {
     /**
      * Schema used by this instance to write Avro data.
-     * @var AvroSchema
+     * @var AvroSchema|null
      */
-    public $writersSchema;
+    public ?AvroSchema $writersSchema;
 
     /**
-     * @param AvroSchema $writers_schema
+     * @param AvroSchema|null $writers_schema
      */
-    public function __construct($writers_schema = null)
+    public function __construct(?AvroSchema $writers_schema = null)
     {
         $this->writersSchema = $writers_schema;
     }
@@ -59,9 +60,11 @@ class AvroIODatumWriter
      * @param AvroSchema $writers_schema
      * @param $datum
      * @param AvroIOBinaryEncoder $encoder
-     * @returns mixed
-     *
+     * @return mixed|void|null
+     * @throws AvroException
      * @throws AvroIOTypeException if $datum is invalid for $writers_schema
+     * @throws AvroSchemaParseException
+     * @noinspection PhpVoidFunctionResultUsedInspection
      */
     public function writeData($writers_schema, $datum, $encoder)
     {
@@ -112,6 +115,7 @@ class AvroIODatumWriter
      * @param AvroSchema $writers_schema
      * @param null|boolean|int|float|string|array $datum item to be written
      * @param AvroIOBinaryEncoder $encoder
+     * @throws AvroIOTypeException
      */
     private function writeArray($writers_schema, $datum, $encoder)
     {
@@ -145,6 +149,12 @@ class AvroIODatumWriter
         $encoder->writeLong(0);
     }
 
+    /**
+     * @param $writers_schema
+     * @param $datum
+     * @param $encoder
+     * @return mixed
+     */
     private function writeFixed($writers_schema, $datum, $encoder)
     {
         /**
@@ -167,6 +177,13 @@ class AvroIODatumWriter
         }
     }
 
+    /**
+     * @param $writers_schema
+     * @param $datum
+     * @param $encoder
+     * @throws AvroIOTypeException
+     * @throws AvroSchemaParseException
+     */
     private function writeUnion($writers_schema, $datum, $encoder)
     {
         $datum_schema_index = -1;
