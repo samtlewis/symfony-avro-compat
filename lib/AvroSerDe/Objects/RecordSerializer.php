@@ -154,8 +154,8 @@ class RecordSerializer
      */
     private function getSchemaIdForSchema(string $subject, AvroSchema $schema): int
     {
-        file_put_contents('/tmp/avro-schema', json_encode($schema));
-        file_put_contents('/tmp/avro-subject', $subject);
+        file_put_contents('avro-schema', json_encode($schema));
+        file_put_contents('avro-subject', $subject);
 
         try {
             $schemaId = $this->extractValueFromRegistryResponse($this->registry->schemaId($subject, $schema));
