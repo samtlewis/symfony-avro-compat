@@ -75,18 +75,18 @@ function checkSchemaCompatibilityAgainstVersionRequest(string $schema, string $s
 
 function checkIfSubjectHasSchemaRegisteredRequest(string $subjectName, string $schema): RequestInterface
 {
-//    return new Request(
-//        'POST',
-//        sprintf('subjects/%s', $subjectName),
-//        CONTENT_TYPE_HEADER + ACCEPT_HEADER,
-//        prepareJsonSchemaForTransfer(validateSchemaStringAsJson($schema))
-//    );
-
     return new Request(
-        'GET',
-        sprintf('subjects/%s/versions/latest', $subjectName),
-        CONTENT_TYPE_HEADER + ACCEPT_HEADER
+        'POST',
+        sprintf('subjects/%s', $subjectName),
+        CONTENT_TYPE_HEADER + ACCEPT_HEADER,
+        prepareJsonSchemaForTransfer(validateSchemaStringAsJson($schema))
     );
+
+//    return new Request(
+//        'GET',
+//        sprintf('subjects/%s/versions/latest', $subjectName),
+//        CONTENT_TYPE_HEADER + ACCEPT_HEADER
+//    );
 }
 
 function schemaRequest(string $id): RequestInterface
