@@ -77,7 +77,7 @@ class PromisingRegistry implements AsynchronousRegistry
 
         $onFulfilled = function (ResponseInterface $response) use ($request) {
             file_put_contents('schema-registered-response', sprintf("schemaId response: %s\n", $response->getBody()));
-            file_put_contents('schema-registered-request', json_encode($request));
+            file_put_contents('schema-registered-request', json_encode($request->getUri()));
             return $this->getJsonFromResponseBody($response)['id'];
         };
 
