@@ -285,6 +285,7 @@ class AvroSchema
 
     /**
      * @param string $json JSON-encoded schema
+     * @throws AvroSchemaParseException
      * @uses self::realParse()
      * @returns AvroSchema
      */
