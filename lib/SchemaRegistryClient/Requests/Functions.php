@@ -158,9 +158,11 @@ function prepareJsonSchemaForTransfer(string $schema, AvroReference ...$referenc
         'schema' => $schema
     ];
 
-    return !$references
+    $json = !$references
         ? \GuzzleHttp\json_encode($return)
         : \GuzzleHttp\json_encode(array_merge($return, ['references' => $references]));
+    file_put_contents('json-schema', $json);
+    return $json;
 }
 
 function validateCompatibilityLevel(string $compatibilityVersion): string
